@@ -38,6 +38,22 @@ public class UIController : Singleton<UIController>
         {
             StartCoroutine(CutSceneFlow());
         }
+
+        if(Input.GetKey(KeyCode.Escape) && (GameManager.instance._gameState != GameManager.GAME_STATE.MENU && GameManager.instance._gameState != GameManager.GAME_STATE.PAUSE))
+        {
+            _pauseUI.gameObject.SetActive(true);
+        }
+    }
+
+    public void ContinueBtn()
+    {
+        _pauseUI.gameObject.SetActive(false);
+    }
+    public void ToMenuBtn()
+    {
+        _pauseUI.gameObject.SetActive(false);
+        HideTutoandCutScene();
+        GameManager.instance.ChangeState(GameManager.GAME_STATE.MENU);
     }
 
     public void PlayTutoBtn()
@@ -129,8 +145,8 @@ public class UIController : Singleton<UIController>
         _blankDark.gameObject.SetActive(true);
         while (_blankDark.transform.localPosition.y > 0)
         {
-            yield return new WaitForSeconds(0.02f);
-            _blankDark.transform.localPosition = new Vector2(0, _blankDark.transform.localPosition.y - 8f);
+            yield return new WaitForSeconds(0.01f);
+            _blankDark.transform.localPosition = new Vector2(0, _blankDark.transform.localPosition.y - 12f);
         }
         _blankDark.transform.localPosition = new Vector2(0, 0);
         yield return new WaitForSeconds(3f);
